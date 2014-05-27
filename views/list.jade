@@ -1,0 +1,9 @@
+
+template(name="list")
+  h1 #{state}
+
+  #jobs
+    each jobs
+      +job
+
+  #loading: canvas(width="50", height="50")

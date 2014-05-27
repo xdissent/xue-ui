@@ -1,0 +1,27 @@
+
+template(name="menu")
+  ul#menu
+    li.inactive
+      a(href="#inactive" class="{{activeLink 'inactive'}}")
+        .count {{stateCount 'inactive'}}
+        | Queued
+    li.active
+      a(href="#active" class="{{activeLink 'active'}}")
+        .count {{stateCount 'active'}}
+        | Active
+    li.failed
+      a(href="#failed" class="{{activeLink 'failed'}}")
+        .count {{stateCount 'failed'}}
+        | Failed
+    li.complete
+      a(href="#complete" class="{{activeLink 'complete'}}")
+        .count {{stateCount 'complete'}}
+        | Complete
+    li.delayed
+      a(href="#delayed" class="{{activeLink 'delayed'}}")
+        .count {{stateCount 'delayed'}}
+        | Delayed
+    li.killed
+      a(href="#killed" class="{{activeLink 'killed'}}")
+        .count {{stateCount 'killed'}}
+        | Killed

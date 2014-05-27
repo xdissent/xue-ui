@@ -1,0 +1,70 @@
+
+template(name="job")
+  .job(id="job-#{_id}")
+    .block.contents
+      h2.id #{_id}
+      a.remove x
+      +if active
+        +progress
+      table.meta
+        tbody
+          tr
+            td Type:
+            td.type #{type}
+          tr
+            td Title:
+            td.title
+              | #{title}
+              +if delayed
+                em (#{relativeDelay})
+          tr
+            td Error:
+            td.errorMessage
+    .details(class="#{showDetails}")
+      .data
+        table.data
+          tbody
+            tr
+              td State:
+              td.state #{state}
+            +unless complete
+              tr
+                td Priority:
+                td.priority #{humanPriority}
+            tr
+              td Attempts:
+              td.attempts #{attempts} / #{max_attempts}
+            +if complete
+              tr.time
+                td Duration:
+                td.duration {{humanDuration duration}}
+            tr.time
+              td Created:
+              td.created_at {{relativeDateTime created_at}}
+            tr.time
+              td
+                +if complete
+                  | Completed:
+                else if killed
+                  | Killed:
+                else
+                  | Updated:
+              td.updated_at {{relativeDateTime updated_at}}
+            +if failed_at
+              tr.time
+                td Failed:
+                td.failed_at  {{relativeDateTime failed_at}}
+            +each dataFields
+              tr
+                td.title #{name}:
+                td.value #{value}
+      +if failed
+        .error
+          pre #{error}
+
+      +unless inactive
+        ul.log
+          +each logs
+            li
+              code.timestamp #{timestamp}
+              code.message #{message}
