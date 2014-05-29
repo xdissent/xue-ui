@@ -1,12 +1,17 @@
 
+Meteor.subscribe 'xue-ui-job-counts'
+
 Template.menu.helpers
-  stateCount: (state) -> Xue.Jobs.find(state: state).count()
+  totalCount: -> XueUI.JobCounts.findOne('total')?.count ? 0
+
+  stateCount: (state) -> XueUI.JobCounts.findOne(state)?.count ? 0
+
   activeLink: (state) ->
-    if XueUISession.equals 'state', state then 'active' else ''
+    if XueUI.Session.equals 'state', state then 'active' else ''
 
 Template.menu.events
   'click li a': (evt) ->
     state = jQuery(evt.currentTarget).attr('href').replace '#', ''
-    XueUISession.set 'state', state
+    XueUI.Session.set 'state', state
     evt.preventDefault()
  
