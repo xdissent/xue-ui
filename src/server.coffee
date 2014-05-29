@@ -36,5 +36,28 @@ Meteor.publish 'xue-ui-job-counts', ->
   @ready()
   @onStop -> handle.stop() for handle in handles
 
+Meteor.publish 'xue-ui-job-types', ->
+  initializing = true
+  counts = {}
+
+  handle = Xue.Jobs.find({}, type: true).observe
+    added: (job) =>
+      counts[job.type] = (counts[job.type] ? 0) + 1
+      return if initializing
+      if counts[job.type] is 1
+        return @added 'xue-ui-job-types', job.type, count: counts[job.type]
+      @changed 'xue-ui-job-types', job.type, count: counts[job.type]
+    removed: (job) =>
+      counts[job.type] -= 1
+      if counts[job.type] is 0
+        @removed 'xue-ui-job-types', job.type
+        return delete counts[job.type]
+      @changed 'xue-ui-job-types', job.type, count: counts[job.type]
+
+  initializing = false
+  @added 'xue-ui-job-types', type, count: count for type, count of counts
+  @ready()
+  @onStop -> handle.stop()
+
 Meteor.methods
   'xue-ui-kill-job': (id) -> Xue.Job.create({_id: id}).kill()

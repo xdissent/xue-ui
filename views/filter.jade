@@ -2,4 +2,5 @@
 template(name="filter")
   select#filter
     option(value="") filter by
-    option(value="Active") Active
+    +each types
+      option(value="#{_id}") #{_id}
