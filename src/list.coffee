@@ -7,5 +7,7 @@ Template.list.helpers
   state: -> XueUI.Session.get 'state'
 
   jobs: ->
-    Xue.Jobs.find state: XueUI.Session.get('state'),
-      sort: [['created_at', XueUI.Session.get 'sort']]
+    sel = state: XueUI.Session.get 'state'
+    filter = XueUI.Session.get 'filter'
+    sel.type = filter if filter?
+    Xue.Jobs.find sel, sort: [['created_at', XueUI.Session.get 'sort']]

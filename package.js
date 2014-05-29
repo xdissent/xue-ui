@@ -24,6 +24,7 @@ Package.on_use(function (api, where) {
     'src/job.coffee',
     'src/list.coffee',
     'src/sort.coffee',
+    'src/filter.coffee',
     'src/menu.coffee',
 
     'styles/actions.import.styl',
