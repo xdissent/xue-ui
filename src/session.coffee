@@ -10,3 +10,9 @@ class XueUISession
   @setDefault: (key, value) -> Session.setDefault @key(key), value
 
   @equals: (key, value) -> Session.equals @key(key), value
+
+
+
+XueUI.Session = XueUISession
+XueUI.Session.setDefault 'state', 'active'
+XueUI.Session.setDefault 'sort', 'asc'

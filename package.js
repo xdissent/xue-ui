@@ -4,7 +4,7 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  api.use(['jade', 'stylus', 'moment', 'templating', 'session'], 'client');
+  api.use(['jade', 'stylus', 'moment', 'templating', 'session', 'deps'], 'client');
   api.use(['xue', 'coffeescript'], ['client', 'server']);
   api.add_files([
     'views/filter.jade',
@@ -19,6 +19,7 @@ Package.on_use(function (api, where) {
     'src/loading.js',
     'src/progress.js',
 
+    'src/index.coffee',
     'src/session.coffee',
     'src/job.coffee',
     'src/list.coffee',
@@ -35,6 +36,6 @@ Package.on_use(function (api, where) {
     'styles/scrollbar.import.styl',
     'styles/main.styl'
   ], 'client');
-  api.add_files(['src/methods.coffee'], 'server');
-  api.export('XueUISession')
+  api.add_files(['src/server.coffee'], 'server');
+  api.export('XueUI')
 });

@@ -1,4 +1,4 @@
 
 Template.sort.events
   'change select': (evt) ->
-    XueUISession.set 'sort', $(evt.currentTarget).val()
+    XueUI.Session.set 'sort', $(evt.currentTarget).val()
