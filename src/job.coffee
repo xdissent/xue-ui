@@ -7,17 +7,7 @@ Template.job.helpers
 
   title: -> @data?.title ? 'untitled'
 
-  inactive: -> @state is 'inactive'
-
-  active: -> @state is 'active'
-
-  delayed: -> @state is 'delayed'
-
-  failed: -> @state is 'failed'
-
-  complete: -> @state is 'complete'
-
-  killed: -> @state is 'killed'
+  isState: (state) -> @state is state
 
   relativeDelay: -> moment(@created_at).add('ms', @delay).fromNow()
 
@@ -32,6 +22,8 @@ Template.job.helpers
   humanDuration: (duration) -> moment.duration(@duration).humanize()
 
   dataFields: -> (name: name, value: value for name, value of @data)
+
+  errorMessage: -> @error?.split?('\n')?[0]?.replace /^Error:\s+/, ''
 
 Template.job.events
   'click .remove': (evt) ->

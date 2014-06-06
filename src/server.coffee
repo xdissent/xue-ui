@@ -11,6 +11,7 @@ Meteor.publish 'xue-ui-jobs-by-state',
     fields = type: true, state: true, 'data.title': true, created_at: true
     fields.progress = true if state is 'active'
     fields.delay = true if state is 'delayed'
+    fields.error = true if state is 'failed'
     sel = state: state
     sel.type = filter if filter?
     sort = [['created_at', sort]]

@@ -4,7 +4,7 @@ template(name="job")
     .block.contents
       h2.id #{_id}
       a.remove x
-      +if active
+      +if isState 'active'
         +progress
       table.meta
         tbody
@@ -15,11 +15,12 @@ template(name="job")
             td Title:
             td.title
               | #{title}
-              +if delayed
+              +if isState 'delayed'
                 em (#{relativeDelay})
-          tr
-            td Error:
-            td.errorMessage
+          +if isState 'failed'
+            tr
+              td Error:
+              td.errorMessage #{errorMessage}
 
     +if showDetails
       .details(class="show")
@@ -29,14 +30,14 @@ template(name="job")
               tr
                 td State:
                 td.state #{state}
-              +unless complete
+              +unless isState 'complete'
                 tr
                   td Priority:
                   td.priority #{humanPriority}
               tr
                 td Attempts:
                 td.attempts #{attempts} / #{max_attempts}
-              +if complete
+              +if isState 'complete'
                 tr.time
                   td Duration:
                   td.duration {{humanDuration duration}}
@@ -45,9 +46,9 @@ template(name="job")
                 td.created_at {{relativeDateTime created_at}}
               tr.time
                 td
-                  +if complete
+                  +if isState 'complete'
                     | Completed:
-                  else if killed
+                  else if isState 'killed'
                     | Killed:
                   else
                     | Updated:
@@ -60,11 +61,11 @@ template(name="job")
                 tr
                   td.title #{name}:
                   td.value #{value}
-        +if failed
+        +if isState 'failed'
           .error
             pre #{error}
 
-        +unless inactive
+        +unless isState 'inactive'
           ul.log
             +each logs
               li
