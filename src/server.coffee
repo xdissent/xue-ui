@@ -8,16 +8,26 @@ Meteor.publish 'xue-ui-jobs-by-state',
     check limit, Number
     check sort, String
     check filter, Match.OneOf null, String
-    fields = logs: false # XXX Would love to exclude data and still get title
-    fields.progress = false unless state is 'active'
+    fields = type: true, state: true, 'data.title': true, created_at: true
+    fields.progress = true if state is 'active'
+    fields.delay = true if state is 'delayed'
     sel = state: state
     sel.type = filter if filter?
-    Xue.Jobs.find sel,
-      fields: fields, limit: limit, sort: [['created_at', sort]]
+    sort = [['created_at', sort]]
+    Xue.Jobs.find sel, fields: fields, limit: limit, sort: sort
 
 Meteor.publish 'xue-ui-job-details', (id) ->
   check id, String
-  Xue.Jobs.find id, fields: logs: true # XXX data: true
+  Xue.Jobs.find id, fields:
+    logs: true
+    data: true
+    updated_at: true
+    failed_at: true
+    duration: true
+    attempts: true
+    max_attempts: true
+    error: true
+    priority: true
 
 Meteor.publish 'xue-ui-job-counts', ->
   initializing = true

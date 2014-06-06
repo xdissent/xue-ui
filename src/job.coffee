@@ -21,7 +21,7 @@ Template.job.helpers
 
   relativeDelay: -> moment(@created_at).add('ms', @delay).fromNow()
 
-  showDetails: -> if XueUI.Session.equals 'selected', @_id then 'show' else ''
+  showDetails: -> XueUI.Session.equals 'selected', @_id
 
   humanPriority: ->
     return n for n, p of Xue.priorities when p is @priority
