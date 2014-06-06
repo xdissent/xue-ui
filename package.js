@@ -14,6 +14,7 @@ Package.on_use(function (api, where) {
     'views/search.jade',
     'views/sort.jade',
     'views/progress.jade',
+    'views/loading.jade',
     'views/index.jade',
 
     'src/loading.js',
@@ -26,6 +27,8 @@ Package.on_use(function (api, where) {
     'src/sort.coffee',
     'src/filter.coffee',
     'src/menu.coffee',
+    'src/progress.coffee',
+    'src/loading.coffee',
 
     'styles/actions.import.styl',
     'styles/config.import.styl',

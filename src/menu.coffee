@@ -12,6 +12,7 @@ Template.menu.helpers
 Template.menu.events
   'click li a': (evt) ->
     state = jQuery(evt.currentTarget).attr('href').replace '#', ''
+    XueUI.Session.set 'limit', 10 unless XueUI.Session.equals 'state', state
     XueUI.Session.set 'state', state
     evt.preventDefault()
  

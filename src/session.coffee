@@ -16,3 +16,6 @@ class XueUISession
 XueUI.Session = XueUISession
 XueUI.Session.setDefault 'state', 'active'
 XueUI.Session.setDefault 'sort', 'asc'
+XueUI.Session.setDefault 'limit', 10
+XueUI.Session.setDefault 'filter', null
+XueUI.Session.setDefault 'loading', false

@@ -2,11 +2,18 @@
 # XXX We should be able to get these this from Xue itself
 states = ['inactive', 'active', 'failed', 'complete', 'delayed', 'killed']
 
-Meteor.publish 'xue-ui-jobs-by-state', (state) ->
-  check state, String
-  fields = logs: false # XXX Would love to exclude data and still get title
-  fields.progress = false unless state is 'active'
-  Xue.Jobs.find {state: state}, fields: fields
+Meteor.publish 'xue-ui-jobs-by-state',
+  (state, limit = 0, sort = 'asc', filter = null) ->
+    check state, String
+    check limit, Number
+    check sort, String
+    check filter, Match.OneOf null, String
+    fields = logs: false # XXX Would love to exclude data and still get title
+    fields.progress = false unless state is 'active'
+    sel = state: state
+    sel.type = filter if filter?
+    Xue.Jobs.find sel,
+      fields: fields, limit: limit, sort: [['created_at', sort]]
 
 Meteor.publish 'xue-ui-job-details', (id) ->
   check id, String
